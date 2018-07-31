@@ -1,4 +1,4 @@
-
+--This is a comment
 term.clear()
 term.setCursorPos(1,1)
 print("please enter in minutes how long you would like the fire to be on: ")
