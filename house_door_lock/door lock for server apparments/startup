@@ -14,9 +14,12 @@ end
 function key()
   event, keyNum, isHeld = os.pullEvent("key")
 end
+print("did we make it here")
 parallel.waitForAny(red(),key())
+print("here?")
 if event == "key" then
   x = read("*")
+  print("in here")
 end
 if event == "redstone" then
   stone = rs.getInput("right")
