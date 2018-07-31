@@ -1,3 +1,4 @@
+password = "a1432a"
 redstone.setOutput("back",true)
 term.clear()
 term.setCursorPos(1,1)
@@ -7,7 +8,7 @@ print("To keep door unlocked for an extended period of time write 'passwrod_unlo
 term.setCursorPos(1,3)
 term.write("Please enter door code: ")
 x = read("*")
-if x == "BeastmodeJD24" then
+if x == password then
   term.clear()
   term.setCursorPos(1,1)
   print("welcome JD") 
@@ -16,7 +17,7 @@ if x == "BeastmodeJD24" then
   redstone.setOutput("back" , true)
   os.reboot()
 end
-if x == "BeastmodeJD24_unlock" then
+if x == (password.."_unlock") then
   term.clear()
   term.setCursorPos(1,1)
   print("please enter dration of lock unlocked (in minutes)")
@@ -53,7 +54,7 @@ if x== "BeastmodeJD24_access" then
   print("you have been given full access to the computer")
   return
 end
-if x ~= BeastmodeJD24 or BeastmodeJD24_unlock or BeastmodeJD24_access then
+if x ~= password or password.."_unlock" or "BeastmodeJD24_access" then
   term.clear()
   term.setCursorPos(1,1)
   print("wrong, please wait for computer to reboot to try again")
