@@ -1,0 +1,100 @@
+floor2 = false
+floor1 = false
+modem = peripheral.wrap("left")
+monitor = peripheral.wrap("top")
+modem.open(1000)
+modem.open(1009)
+y = 0 
+term.clear()
+term.setCursorPos(1,1)
+print("Running...")
+redstone.setOutput("back",true)
+monitor.clear()
+monitor.setTextColor(colors.green)
+monitor.setCursorPos(11,12)
+monitor.write("All Good")
+monitor.setTextColor(colors.white)
+monitor.setCursorPos(1,1)
+monitor.write("Building uses")
+monitor.setCursorPos(1,2)
+monitor.write("wireless Fire")
+monitor.setCursorPos(1,3)
+monitor.write("Alarm system.")
+event, modemSide, senderChannel, replyChannel, message, senderDistance = os.pullEvent("modem_message")
+monitor.setTextColor(colors.red)
+redstone.setOutput("back",false)
+t = tonumber(replyChannel)  
+if t == 1002 then
+  floor2 = true 
+  monitor.clear()
+  monitor.setCursorPos(1,3)
+  monitor.write("fire floor 2:")
+  if message == "pull" then
+    monitor.setCursorPos(15,3)
+    monitor.write("P")
+end	
+end
+if t == 1001 then
+monitor.clear()
+monitor.setCursorPos(1,2)
+monitor.write("Fire floor 1: P")
+sleep(5)
+ end
+sleep(1)
+function mess()
+event2, modemSide, senderChannel2, replyChannel2, message2, senderDistance2 = os.pullEvent("modem_message")
+end
+function key()
+event23, x = os.pullEvent("key") 
+end
+while y ~= 1 do
+  parallel.waitForAny(mess,key)
+    if x == keys.q then
+      monitor.setCursorPos(1,1)
+	  monitor.clear()
+      monitor.write("resetting system")
+      sleep(2)
+	 modem.transmit(1002,1009,"all_clear")
+	  modem.transmit(1001,1009,"all_clear")
+    sleep(1)
+	while rs.getInput("right") == true do
+	monitor.clear()
+	monitor.setCursorPos(1,1)
+	monitor.write("One or more floor")
+	monitor.setCursorPos(1,2)
+	monitor.write("fire computers")
+	monitor.setCursorPos(1,3)
+	monitor.write("have a pull")
+	monitor.setCursorPos(1,4)
+    monitor.write("station still")
+	monitor.setCursorPos(1,5)
+   	monitor.write("pulled in their")
+	monitor.setCursorPos(1,6)
+	monitor.write("system")
+	monitor.setCursorPos(1,8)
+	monitor.write("see computer for")
+	monitor.setCursorPos(1,9)
+	monitor.write("more")
+	term.clear()
+	term.setCursorPos(1,1)
+	print("Computers (including this one) will reset once all pull stations have been reset")
+	print("running")
+	sleep(1)
+	end
+os.reboot()	
+	end
+     if replyChannel2 == 1002 then
+  monitor.setCursorPos(1,3)
+  monitor.write("fire floor 2:")
+  if message2 == "pull" then
+    monitor.setCursorPos(15,3)
+    monitor.write("P")
+end	
+end
+if replyChannel2 == 1001 then
+monitor.clear()
+  monitor.setCursorPos(1,2)
+  monitor.write("fire floor 1: P")
+ sleep(5)
+ end
+end
