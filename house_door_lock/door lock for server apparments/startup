@@ -8,13 +8,25 @@ term.setCursorPos(1,1)
 print("To keep door unlocked for an extended period of time write 'passwrod_unlock'.")
 term.setCursorPos(1,3)
 term.write("Please enter door code: ")
-function r()
+function red()
+  event = os.pullEvent("redstone")
+end
+function key()
+  event, keyNum, isHeld = os.pullEvent("key")
+parallel.waitForAny(red(),key())
+if event == "key" then
   x = read("*")
 end
-function red()
-  os.pullEvent("redstone")
+if event == "redstone" then
+  stone = rs.getInput("right")
+  if stone == true then
+    rs.setOutput("back",false)
+    sleep(2)
+    rs.setOutput("back",true)
+    os.reboot()
+  end
+  os.reboot()
 end
-parallel.waitForAny(r(),red())
 if x == password then
   term.clear()
   term.setCursorPos(1,1)
