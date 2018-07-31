@@ -13,6 +13,7 @@ function red()
 end
 function key()
   event, keyNum, isHeld = os.pullEvent("key")
+end
 parallel.waitForAny(red(),key())
 if event == "key" then
   x = read("*")
