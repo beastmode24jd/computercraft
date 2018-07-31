@@ -1,4 +1,5 @@
 password = "a1432a"
+name = "Ian"
 redstone.setOutput("back",true)
 term.clear()
 term.setCursorPos(1,1)
@@ -7,11 +8,17 @@ term.setCursorPos(1,1)
 print("To keep door unlocked for an extended period of time write 'passwrod_unlock'.")
 term.setCursorPos(1,3)
 term.write("Please enter door code: ")
-x = read("*")
+function r()
+  x = read("*")
+end
+function red()
+  os.pullEvent("redstone")
+end
+parallel.waitForAny(r(),red())
 if x == password then
   term.clear()
   term.setCursorPos(1,1)
-  print("welcome JD") 
+  print("welcome "..name) 
   redstone.setOutput("back", false)
   sleep(5)
   redstone.setOutput("back" , true)
@@ -39,6 +46,7 @@ if x == (password.."_unlock") then
 end
 z = math.floor(y) * 60 redstone.setOutput("left" , true)
 redstone.setOutput("back",false)
+print("welcome "..name)
 while z > 0 do
     term.setCursorPos(1,1)
     term.clear()
