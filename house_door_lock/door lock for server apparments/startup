@@ -15,7 +15,7 @@ function key()
   event, keyNum, isHeld = os.pullEvent("key")
 end
 print("did we make it here")
-parallel.waitForAny(red(),key())
+parallel.waitForAny(red,key)
 print("here?")
 if event == "key" then
   x = read("*")
