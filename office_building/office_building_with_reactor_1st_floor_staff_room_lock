@@ -1,0 +1,116 @@
+term.clear()
+
+term.setCursorPos(1,1)
+
+os.pullEvent = os.pullEventRaw
+
+term.write("please enter door code: ")
+
+x = read("*")
+
+
+if x == "BeastmodeJD24" then
+  
+  term.clear()
+  
+  term.setCursorPos(1,1)
+  
+  print("Access Grandted") 
+  
+  redstone.setOutput("left", true)
+  
+  sleep(3)
+  
+  redstone.setOutput("left" , false)
+  
+  os.reboot()
+
+end
+
+
+if x == "BeastmodeJD24_unlock" then
+  
+  term.clear()
+  
+  term.setCursorPos(1,1)
+  
+  print("please enter dration of lock unlocked (in minutes)")
+  
+  term.write("enter here: ")
+  
+  y = read()
+  
+  if (tonumber(y) == nil) then 
+    
+    term.clear()
+    
+    term.setCursorPos(1,1)
+    
+    print("invailed, please wait for computer to reboot and try again from start")
+    
+    sleep(2)   
+    
+    os.reboot()
+  
+  end    
+  
+  if (tonumber(y) < 1) then 
+    
+    term.clear()
+    
+    term.setCursorPos(1,1)
+    
+    print("invailed, please wait for computer to reboot and try again from start")
+    
+    sleep(2)
+    
+    os.reboot()
+   
+   end
+  
+z = math.floor(y) * 60 
+  redstone.setOutput("left" , true)
+  
+
+  while z > 0 do
+    
+term.setCursorPos(1,1)
+    
+term.clear()
+    
+print(z.. " seconds left")
+
+    if redstone.getInput("back") == true then
+      os.reboot()
+    end
+    sleep(1)
+z = z - 1 
+
+  end
+  
+sleep(z)
+ 
+
+end
+
+
+if x== "BeastmodeJD24_access" then
+  
+  term.clear()
+  
+  term.setCursorPos(1,1)
+  
+  print("you have been given full access to the computer")
+  
+  return
+
+end
+
+
+if x ~= BeastmodeJD24 or BeastmodeJD24_unlock or BeastmodeJD24_access then
+  term.clear()
+  term.setCursorPos(1,1)
+  print("wrong, please wait for computer to reboot to try again")
+  sleep(2)
+  os.reboot()
+end        
