@@ -10,7 +10,7 @@ if v1 ~= 1.2 then
 	file:close()
 	file = io.open("ver","w")
 	file:write(1.2)
-	fiel:close()
+	file:close()
 end
 if not fs.exists("ver") then
 	term.clear()
