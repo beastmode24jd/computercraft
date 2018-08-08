@@ -1,0 +1,15 @@
+monitore = peripheral.wrap("monitor_2")
+monitore.clear()
+monitore.setCursorPos(6,3)
+monitore.write("Welcome")
+print("Running")
+while redstone .getInput("left") == flase do 
+    sleep(.5)
+end
+redstone.setOutput("front",true)
+monitore.clear()
+monitore.setCursorPos(1,3)
+monitore.write("Please Wait")
+sleep(15)
+rs.setOutput("front",false)
+os.reboot()
