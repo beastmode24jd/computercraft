@@ -3,7 +3,7 @@ monitore.clear()
 monitore.setCursorPos(6,3)
 monitore.write("Welcome")
 print("Running")
-while redstone .getInput("left") == flase do 
+while redstone .getInput("left") == false do 
     sleep(.5)
 end
 redstone.setOutput("front",true)
