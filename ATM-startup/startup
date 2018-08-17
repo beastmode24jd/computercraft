@@ -11,7 +11,7 @@ if not fs.exists("atm_money") then
   os.reboot()
 end
 file = io.open("atm_money", "r")
-file:read() = atm_money
+atm_money = file:read()
 file:close()
 if atm_money < 64 then 
   term.clear()
