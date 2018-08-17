@@ -1,0 +1,696 @@
+atm = 1 modem = peripheral.wrap("back")
+printer = peripheral.wrap("left")
+ink = printer.getInkLevel()
+paper = printer.getPaperLevel()
+if not fs.exists("atmmoney") then
+  term.clear()
+  term.setCursorPos(1,1)
+  term.setTextColor( colors.red )
+  print("file: 'atmmoney' not found!!!!!")
+  sleep(10)
+  os.reboot()
+end
+file = io.open("jmoney", "r")
+file:read() = atm_money
+file:close()
+if atm_money < 64 then 
+  term.clear()
+  term.setCursorPos(1,1) 
+  term.setTextColor( colors.red)
+  print("Atm out of money! I am ATM "..atm..". Please notify JD")
+  sleep(10)
+end
+if ink < 1 or paper < 1 then
+  term.clear()
+  term.setCursorPos(1,1)
+  term.setTextColor( colors.red )
+  print("Printer out of paper/ink. ErrorMes#006 Please notify the bank help desk. I am ATM_1")
+  sleep(10)
+  os.reboot()
+end  
+  
+  
+term.clear()
+
+term.setCursorPos(1,1)
+
+term.write("Name: ")
+
+name = read()
+
+if name == "jd" then 
+
+  term.setCursorPos(1,2)
+
+ term.clear() term.write("Password: ")
+
+ password=read("*") if password == "BeastmodeJD24" then
+
+atm = 1
+sc = 5008
+term.clear()
+term.setCursorPos(1,1)
+print("welcome jd")
+print("Please wait while I Think...")
+sleep(2)
+modem.transmit(sc,atm,"jdatm")
+modem.open(5009)
+event, modemSide, senderChannel, replyChannel, message, senderDistance = os.pullEvent("modem_message")
+money = replyChannel 
+   if message == "go" then
+
+term.clear()
+term.setCursorPos(1,1)
+print("Account Ballance: $"..money)
+print("How much would you like to withdraw (MAX: 64)? (NOTE: NO DECIMALS!: ATM will round any decimal to a whole number!):")
+term.write("$")
+wd = read()
+    if (tonumber(wd) == nil)   then 
+modem.transmit(sc,sc,"iv")
+term.clear()
+term.setCursorPos(1,1)
+print("Value entered is invalid. ErrorMes#005")
+sleep(5)
+modem.closeAll()
+os.reboot()
+    end
+if (tonumber(wd) < 1) then 
+
+modem.transmit(sc,sc,"iv")
+term.clear()
+term.setCursorPos(1,1)
+print("Value entered is invalid. ErrorMes#005")
+sleep(5)
+modem.closeAll()
+os.reboot()
+    end
+
+if (tonumber(wd) > 64) then
+modem.transmit(sc,sc,"iv")
+term.clear()
+term.setCursorPos(1,1)
+print("Value entered is invalid. ErrorMes#005")
+sleep(5)
+modem.closeAll()
+os.reboot()
+    end
+modem.transmit(sc,sc,wd)
+event2, modemSide2, senderChannel2, replyChannel2, message2, senderDistance2 = os.pullEvent("modem_message")
+  if message2 == "over" then
+term.clear()
+term.setCursorPos(1,1)
+print("Value is over amount in account. Account value will not change, no money will be withdrawaled. ErrorMes#004")
+sleep(5)
+modem.closeAll()
+os.reboot()
+  end
+  if message2 == "ok_done" then
+term.clear()
+term.setCursorPos(1,1)
+moneynew = tonumber(money) - wd 
+print("Withdraw complete! You have $"..moneynew.. " left in account. Please awnser the next question and then your money will be given to you")
+print("Would you like your receipt? y for yes, n for no: ")
+rct = read()
+  if rct == "y" then
+printer.newPage()
+printer.setPageTitle("ATM Trans Receipt")
+printer.setCursorPos(7,1)
+printer.write("ATM RECEIPT") 
+printer.setCursorPos(5.5,2)
+printer.write("Beastmode Bank")
+printer.setCursorPos(1,3)
+printer.write("ATM#:")
+printer.setCursorPos(7,3)
+printer.write(atm)
+printer.setCursorPos(1,4)
+printer.write("Account Owner:")
+printer.setCursorPos(16,4)
+printer.write("JD")
+printer.setCursorPos(1,5)
+printer.write("$ withdrawaled: $")
+printer.setCursorPos(18,5)
+printer.write(wd)
+printer.setCursorPos(1,6)
+printer.write("$ left: $")
+printer.setCursorPos(10,6)
+printer.write(moneynew)
+printer.setCursorPos(10,7)
+printer.write("NOTES")
+printer.setCursorPos(1,8)
+printer.write("N/A")
+printer.endPage()
+term.clear()
+term.setCursorPos(1,1)
+print("Receipt printed. Please Take your receipt and don't take anything else from the printer. Your money will be given to you in 10 seconds")
+sleep(8)
+  else
+term.clear()
+term.setCursorPos(1,1)
+print("Ok, your money will be despenced shortly.")
+  end
+redstone.setOutput("bottom", true)
+sleep(2)
+zzz = 0
+
+redstone.setOutput("bottom",true)
+  while zzz < tonumber(wd) do
+redstone.setOutput("right", true)
+sleep(.1)
+redstone.setOutput("right",false)
+zzz = zzz + 1
+sleep(.1)
+  end
+sleep(.5)
+modem.transmit(5008,5009,"done")
+redstone.setOutput("bottom", false)
+term.clear()
+term.setCursorPos(1,1)
+print("Thank you")
+sleep(5)
+modem.closeAll()
+os.reboot()
+  else
+term.clear()
+term.setCursorPos(1,1)
+print("Sorry, something went wrong, please try again. If error comes again, please vist bank to access account. ErrorMes#003")
+sleep(5)
+modem.closeAll()
+os.reboot()
+  end
+ 
+
+
+end
+ else
+
+     print("Incorrect, please wait and try again. ErrorMes#002")
+
+   sleep(5)
+
+   os.reboot()
+
+
+
+ end
+ end
+
+ if name == "city" then
+
+ term.setCursorPos(1,2)
+
+ term.clear() term.write("Password: ")
+
+ password=read("*") if password == "Password4City" then
+
+    
+
+
+
+sc = 5010
+term.clear()
+term.setCursorPos(1,1)
+print("welcome city mayor")
+print("Please wait while I Think...")
+sleep(2)
+modem.transmit(sc,atm,"cityatm")
+modem.open(5009)
+event, modemSide, senderChannel, replyChannel, message, senderDistance = os.pullEvent("modem_message")
+money = replyChannel 
+   if message == "go" then
+
+term.clear()
+term.setCursorPos(1,1)
+print("Account Ballance: $"..money)
+print("How much would you like to withdraw (MAX: 64)? (NOTE: NO DECIMALS!: ATM will round any decimal to a whole number!):")
+term.write("$")
+wd = read()
+    if (tonumber(wd) == nil)   then 
+modem.transmit(sc,sc,"iv")
+term.clear()
+term.setCursorPos(1,1)
+print("Value entered is invalid. ErrorMes#005")
+sleep(5)
+modem.closeAll()
+os.reboot()
+    end
+if (tonumber(wd) < 1) then 
+
+modem.transmit(sc,sc,"iv")
+term.clear()
+term.setCursorPos(1,1)
+print("Value entered is invalid. ErrorMes#005")
+sleep(5)
+modem.closeAll()
+os.reboot()
+    end
+
+if (tonumber(wd) > 64) then
+modem.transmit(sc,sc,"iv")
+term.clear()
+term.setCursorPos(1,1)
+print("Value entered is invalid. ErrorMes#005")
+sleep(5)
+modem.closeAll()
+os.reboot()
+    end
+modem.transmit(sc,sc,wd)
+event2, modemSide2, senderChannel2, replyChannel2, message2, senderDistance2 = os.pullEvent("modem_message")
+  if message2 == "over" then
+term.clear()
+term.setCursorPos(1,1)
+print("Value is over amount in account. Account value will not change, no money will be withdrawaled. ErrorMes#004")
+sleep(5)
+modem.closeAll()
+os.reboot()
+  end
+  if message2 == "ok_done" then
+term.clear()
+term.setCursorPos(1,1)
+moneynew = tonumber(money) - wd 
+print("Withdraw complete! You have $"..moneynew.. " left in account. Please awnser the next question and then your money will be given to you")
+print("Would you like your receipt? y for yes, n for no: ")
+rct = read()
+  if rct == "y" then
+printer.newPage()
+printer.setPageTitle("ATM Trans Receipt")
+printer.setCursorPos(7,1)
+printer.write("ATM RECEIPT") 
+printer.setCursorPos(5.5,2)
+printer.write("Beastmode Bank")
+printer.setCursorPos(1,3)
+printer.write("ATM#:")
+printer.setCursorPos(7,3)
+printer.write(atm)
+printer.setCursorPos(1,4)
+printer.write("Account Owner:")
+printer.setCursorPos(16,4)
+printer.write("City")
+printer.setCursorPos(1,5)
+printer.write("$ withdrawaled: $")
+printer.setCursorPos(18,5)
+printer.write(wd)
+printer.setCursorPos(1,6)
+printer.write("$ left: $")
+printer.setCursorPos(10,6)
+printer.write(moneynew)
+printer.setCursorPos(10,7)
+printer.write("NOTES")
+printer.setCursorPos(1,8)
+printer.write("N/A")
+printer.endPage()
+term.clear()
+term.setCursorPos(1,1)
+print("Receipt printed. Please Take your receipt and don't take anything else from the printer. Your money will be given to you in 10 seconds")
+sleep(8)
+  else
+term.clear()
+term.setCursorPos(1,1)
+print("Ok, your money will be despenced shortly.")
+  end
+redstone.setOutput("bottom", true)
+sleep(2)
+zzz = 0
+
+redstone.setOutput("bottom",true)
+  while zzz < tonumber(wd) do
+redstone.setOutput("right", true)
+sleep(.1)
+redstone.setOutput("right",false)
+zzz = zzz + 1
+sleep(.1)
+  end
+sleep(.5)
+modem.transmit(5008,5009,"done")
+redstone.setOutput("bottom", false)
+term.clear()
+term.setCursorPos(1,1)
+print("Thank you")
+sleep(5)
+modem.closeAll()
+os.reboot()
+  else
+term.clear()
+term.setCursorPos(1,1)
+print("Sorry, something went wrong, please try again. If error comes again, please vist bank to access account. ErrorMes#003")
+sleep(5)
+modem.closeAll()
+os.reboot()
+  end
+ 
+
+
+end
+ else
+
+     print("Incorrect, please wait and try again. ErrorMes#002")
+
+   sleep(5)
+
+   os.reboot()
+
+
+
+ end
+ end
+
+ 
+if name == "abby" then
+
+ term.setCursorPos(1,2)
+
+ term.clear() term.write("Password: ")
+
+ password=read("*") if password == "mcshane" then
+
+     
+
+sc = 5012
+term.clear()
+term.setCursorPos(1,1)
+print("welcome Abby")
+print("Please wait while I Think...")
+sleep(2)
+modem.transmit(sc,atm,"abbyatm")
+modem.open(5009)
+event, modemSide, senderChannel, replyChannel, message, senderDistance = os.pullEvent("modem_message")
+money = replyChannel 
+   if message == "go" then
+
+term.clear()
+term.setCursorPos(1,1)
+print("Account Ballance: $"..money)
+print("How much would you like to withdraw (MAX: 64)? (NOTE: NO DECIMALS!: ATM will round any decimal to a whole number!):")
+term.write("$")
+wd = read()
+    if (tonumber(wd) == nil)   then 
+modem.transmit(sc,sc,"iv")
+term.clear()
+term.setCursorPos(1,1)
+print("Value entered is invalid. ErrorMes#005")
+sleep(5)
+modem.closeAll()
+os.reboot()
+    end
+if (tonumber(wd) < 1) then 
+
+modem.transmit(sc,sc,"iv")
+term.clear()
+term.setCursorPos(1,1)
+print("Value entered is invalid. ErrorMes#005")
+sleep(5)
+modem.closeAll()
+os.reboot()
+    end
+
+if (tonumber(wd) > 64) then
+modem.transmit(sc,sc,"iv")
+term.clear()
+term.setCursorPos(1,1)
+print("Value entered is invalid. ErrorMes#005")
+sleep(5)
+modem.closeAll()
+os.reboot()
+    end
+modem.transmit(sc,sc,wd)
+event2, modemSide2, senderChannel2, replyChannel2, message2, senderDistance2 = os.pullEvent("modem_message")
+  if message2 == "over" then
+term.clear()
+term.setCursorPos(1,1)
+print("Value is over amount in account. Account value will not change, no money will be withdrawaled. ErrorMes#004")
+sleep(5)
+modem.closeAll()
+os.reboot()
+  end
+  if message2 == "ok_done" then
+term.clear()
+term.setCursorPos(1,1)
+moneynew = tonumber(money) - wd 
+print("Withdraw complete! You have $"..moneynew.. " left in account. Please awnser the next question and then your money will be given to you")
+print("Would you like your receipt? y for yes, n for no: ")
+rct = read()
+  if rct == "y" then
+printer.newPage()
+printer.setPageTitle("ATM Trans Receipt")
+printer.setCursorPos(7,1)
+printer.write("ATM RECEIPT") 
+printer.setCursorPos(5.5,2)
+printer.write("Beastmode Bank")
+printer.setCursorPos(1,3)
+printer.write("ATM#:")
+printer.setCursorPos(7,3)
+printer.write(atm)
+printer.setCursorPos(1,4)
+printer.write("Account Owner:")
+printer.setCursorPos(16,4)
+printer.write("Abby")
+printer.setCursorPos(1,5)
+printer.write("$ withdrawaled: $")
+printer.setCursorPos(18,5)
+printer.write(wd)
+printer.setCursorPos(1,6)
+printer.write("$ left: $")
+printer.setCursorPos(10,6)
+printer.write(moneynew)
+printer.setCursorPos(10,7)
+printer.write("NOTES")
+printer.setCursorPos(1,8)
+printer.write("N/A")
+printer.endPage()
+term.clear()
+term.setCursorPos(1,1)
+print("Receipt printed. Please Take your receipt and don't take anything else from the printer. Your money will be given to you in 10 seconds")
+sleep(8)
+  else
+term.clear()
+term.setCursorPos(1,1)
+print("Ok, your money will be despenced shortly.")
+  end
+redstone.setOutput("bottom", true)
+sleep(2)
+zzz = 0
+
+redstone.setOutput("bottom",true)
+  while zzz < tonumber(wd) do
+redstone.setOutput("right", true)
+sleep(.1)
+redstone.setOutput("right",false)
+zzz = zzz + 1
+sleep(.1)
+  end
+sleep(.5)
+modem.transmit(5008,5009,"done")
+redstone.setOutput("bottom", false)
+term.clear()
+term.setCursorPos(1,1)
+print("Thank you")
+sleep(5)
+modem.closeAll()
+os.reboot()
+  else
+term.clear()
+term.setCursorPos(1,1)
+print("Sorry, something went wrong, please try again. If error comes again, please vist bank to access account. ErrorMes#003")
+sleep(5)
+modem.closeAll()
+os.reboot()
+  end
+ 
+
+
+end
+ else
+
+     print("Incorrect, please wait and try again. ErrorMes#002")
+
+   sleep(5)
+
+   os.reboot()
+
+ 
+
+ end
+ end
+
+ 
+if name == "ian" then
+ term.setCursorPos(1,2)
+
+ term.clear() term.write("Password: ")
+
+ password=read("*") if password == "a1432a" then
+
+    
+
+
+
+
+sc = 5014
+term.clear()
+term.setCursorPos(1,1)
+print("welcome Ian")
+print("Please wait while I Think...")
+sleep(2)
+modem.transmit(sc,atm,"ianatm")
+modem.open(5009)
+event, modemSide, senderChannel, replyChannel, message, senderDistance = os.pullEvent("modem_message")
+money = replyChannel 
+   if message == "go" then
+
+term.clear()
+term.setCursorPos(1,1)
+print("Account Ballance: $"..money)
+print("How much would you like to withdraw (MAX: 64)? (NOTE: NO DECIMALS!: ATM will round any decimal to a whole number!):")
+term.write("$")
+wd = read()
+    if (tonumber(wd) == nil)   then 
+modem.transmit(sc,sc,"iv")
+term.clear()
+term.setCursorPos(1,1)
+print("Value entered is invalid. ErrorMes#005")
+sleep(5)
+modem.closeAll()
+os.reboot()
+    end
+if (tonumber(wd) < 1) then 
+
+modem.transmit(sc,sc,"iv")
+term.clear()
+term.setCursorPos(1,1)
+print("Value entered is invalid. ErrorMes#005")
+sleep(5)
+modem.closeAll()
+os.reboot()
+    end
+
+if (tonumber(wd) > 64) then
+modem.transmit(sc,sc,"iv")
+term.clear()
+term.setCursorPos(1,1)
+print("Value entered is invalid. ErrorMes#005")
+sleep(5)
+modem.closeAll()
+os.reboot()
+    end
+modem.transmit(sc,sc,wd)
+event2, modemSide2, senderChannel2, replyChannel2, message2, senderDistance2 = os.pullEvent("modem_message")
+  if message2 == "over" then
+term.clear()
+term.setCursorPos(1,1)
+print("Value is over amount in account. Account value will not change, no money will be withdrawaled. ErrorMes#004")
+sleep(5)
+modem.closeAll()
+os.reboot()
+  end
+  if message2 == "ok_done" then
+term.clear()
+term.setCursorPos(1,1)
+moneynew = tonumber(money) - wd 
+print("Withdraw complete! You have $"..moneynew.. " left in account. Please awnser the next question and then your money will be given to you")
+print("Would you like your receipt? y for yes, n for no: ")
+rct = read()
+  if rct == "y" then
+printer.newPage()
+printer.setPageTitle("ATM Trans Receipt")
+printer.setCursorPos(7,1)
+printer.write("ATM RECEIPT") 
+printer.setCursorPos(5.5,2)
+printer.write("Beastmode Bank")
+printer.setCursorPos(1,3)
+printer.write("ATM#:")
+printer.setCursorPos(7,3)
+printer.write(atm)
+printer.setCursorPos(1,4)
+printer.write("Account Owner:")
+printer.setCursorPos(16,4)
+printer.write("Ian")
+printer.setCursorPos(1,5)
+printer.write("$ withdrawaled: $")
+printer.setCursorPos(18,5)
+printer.write(wd)
+printer.setCursorPos(1,6)
+printer.write("$ left: $")
+printer.setCursorPos(10,6)
+printer.write(moneynew)
+printer.setCursorPos(10,7)
+printer.write("NOTES")
+printer.setCursorPos(1,8)
+printer.write("N/A")
+printer.endPage()
+term.clear()
+term.setCursorPos(1,1)
+print("Receipt printed. Please Take your receipt and don't take anything else from the printer. Your money will be given to you in 10 seconds")
+sleep(8)
+  else
+term.clear()
+term.setCursorPos(1,1)
+print("Ok, your money will be despenced shortly.")
+  end
+redstone.setOutput("bottom", true)
+sleep(2)
+zzz = 0
+
+redstone.setOutput("bottom",true)
+  while zzz < tonumber(wd) do
+redstone.setOutput("right", true)
+sleep(.1)
+redstone.setOutput("right",false)
+zzz = zzz + 1
+sleep(.1)
+  end
+sleep(.5)
+modem.transmit(5008,5009,"done")
+redstone.setOutput("bottom", false)
+term.clear()
+term.setCursorPos(1,1)
+print("Thank you")
+sleep(5)
+modem.closeAll()
+os.reboot()
+  else
+term.clear()
+term.setCursorPos(1,1)
+print("Sorry, something went wrong, please try again. If error comes again, please vist bank to access account. ErrorMes#003")
+sleep(5)
+modem.closeAll()
+os.reboot()
+  end
+ 
+
+
+end
+ else
+
+     print("Incorrect, please wait and try again. ErrorMes#002")
+
+   sleep(5)
+
+   os.reboot()
+
+
+
+ end
+ end
+
+ 
+if name ~= ("ian" or "abby" or "jd" or "city") then 
+
+  term.clear()
+
+  print("Name not registered with bank. Please try again or vist the bank help counter with the error message number to register or get other help. ErrorMes#: 001")
+
+
+
+  print("Computer will reboot in 10 seconds")
+
+sleep(10)
+
+os.reboot()
+end
+
+
+
+
+
+
+
+
