@@ -13,7 +13,7 @@ end
 file = io.open("atm_money", "r")
 atm_money = file:read()
 file:close()
-if atm_money < 64 then 
+if tonumber(atm_money) < 64 then 
   term.clear()
   term.setCursorPos(1,1) 
   term.setTextColor( colors.red)
