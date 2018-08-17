@@ -2,15 +2,15 @@ atm = 1 modem = peripheral.wrap("back")
 printer = peripheral.wrap("left")
 ink = printer.getInkLevel()
 paper = printer.getPaperLevel()
-if not fs.exists("atmmoney") then
+if not fs.exists("atm_money") then
   term.clear()
   term.setCursorPos(1,1)
   term.setTextColor( colors.red )
-  print("file: 'atmmoney' not found!!!!!")
+  print("file: 'atm_money' not found!!!!!")
   sleep(10)
   os.reboot()
 end
-file = io.open("jmoney", "r")
+file = io.open("atm_money", "r")
 file:read() = atm_money
 file:close()
 if atm_money < 64 then 
@@ -37,7 +37,12 @@ term.setCursorPos(1,1)
 term.write("Name: ")
 
 name = read()
-
+if name == "reset" then
+  atm_reset = 576 
+  file = io.open("atm_money","w")
+  file:write(atm_reset)
+  file:close()
+end
 if name == "jd" then 
 
   term.setCursorPos(1,2)
